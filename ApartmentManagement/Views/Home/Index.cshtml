@@ -1,0 +1,18 @@
+﻿@{ ViewData["Title"] = "Home Page"; }
+
+<div class="text-center">
+  <h1 class="display-4">Welcome</h1>
+  <div>qwe
+    <i data-feather="circle" color="black" id="my-circle" class="foo bar" stroke-width="1"></i>
+  </div>
+  <p>
+    Learn about
+    <a href="https://docs.microsoft.com/aspnet/core"
+      >building Web apps with ASP.NET Core</a
+    >.
+    <li>
+     <i data-feather="circle"></i>
+     @Html.ActionLink("Bills", "Index", "Bills", new { @class = "elements" }, null)
+    </li>
+  </p>
+</div>

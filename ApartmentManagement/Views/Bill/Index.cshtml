@@ -1,0 +1,41 @@
+﻿@model List<BillViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome @Model.Count</h1>
+    <table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Block</th>
+            <th scope="col">Floor</th>
+            <th scope="col">Door</th>
+            <th scope="col">Name</th>
+            <th scope="col">Bill Amount [TRY]</th>
+            <th scope="col">Bill Type</th>
+            <th scope="col">E-Mail</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@item.Id</th>
+                <td scope="row">@item.Block</td>
+                <td>@item.Floor</td>
+                <td>@item.Door</td>
+                <td>@item.UserName</td>
+                <td>@item.Amount</td>
+                <td>@item.Type</td>
+                
+                <td>@item.EMail</td>
+                
+            </tr>
+        }
+    </tbody>
+    </table>
+</div>
