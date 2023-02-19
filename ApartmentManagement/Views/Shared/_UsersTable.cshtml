@@ -1,0 +1,35 @@
+@model List<UserViewModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">UID</th>
+            <th scope="col">Role</th>
+            <th scope="col">E-Mail</th>
+            <th scope="col">Name</th>
+            <th scope="col">Surname</th>
+            <th scope="col">Phone</th>
+            <th scope="col">TCNo</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@item.Id</th>
+                <td>@item.Role</td>
+                <td>@item.Email</td>
+                <td>@item.Name</td>
+                <td>@item.Surname</td>
+                <td>@item.Phone</td>
+                <td>@item.TCNo</td>
+                <td><a class="btn btn-primary" href="@Url.Action("Details", "Apartments", new { id = item.Id })" role="button">Apartments</a></td>
+                <td><a class="btn btn-warning" href="@Url.Action("Edit", "Apartments", new { id = item.Id })" role="button">Edit</a></td>
+                <td><a class="btn btn-danger" href="@Url.Action("Delete", "Apartments", new { id = item.Id })" role="button">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

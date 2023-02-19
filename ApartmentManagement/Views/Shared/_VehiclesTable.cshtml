@@ -1,0 +1,31 @@
+@model List<VehicleViewModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">UID</th>
+            <th scope="col">License Plate</th>
+            <th scope="col">Owner Name</th>
+            <th scope="col">E-Mail</th>
+            <th scope="col">Phone</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@item.Id</th>
+                <td>@item.LicensePlate</td>
+                <td>@item.UserName</td>
+                <td>@item.EMail</td>
+                <td>@item.Phone</td>
+                <td><a class="btn btn-success" href="@Url.Action("Pay", "Bills", new { id = item.Id })" role="button">Pay</a></td>
+                <td><a class="btn btn-warning" href="@Url.Action("Edit", "Bills", new { id = item.Id })" role="button">Edit</a></td>
+                <td><a class="btn btn-danger" href="@Url.Action("Delete", "Bills", new { id = item.Id })" role="button">Delete</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

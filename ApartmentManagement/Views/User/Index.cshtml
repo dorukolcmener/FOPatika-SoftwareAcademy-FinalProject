@@ -1,0 +1,13 @@
+@model List<UserViewModel>
+
+@{
+    ViewData["Title"] = "Users Page";
+}
+
+<div class="text-center">
+    <div class="list-group-item d-flex justify-content-center align-items-center">
+        <h3>Users</h3> 
+    </div>
+    @await Html.PartialAsync("_UsersTable", Model)
+    <a class="btn btn-success" href="@Url.Action("CreateUser", "Users")" role="button">Create User</a>
+</div>

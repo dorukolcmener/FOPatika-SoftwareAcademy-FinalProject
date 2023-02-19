@@ -1,0 +1,12 @@
+@model List<VehicleViewModel>
+
+@{
+    ViewData["Title"] = "Vehicles Page";
+}
+
+<div class="text-center">
+    <div class="list-group-item d-flex justify-content-center align-items-center">
+        <h3>Vehicles</h3> 
+    </div>
+    @await Html.PartialAsync("_VehiclesTable", Model)
+</div>

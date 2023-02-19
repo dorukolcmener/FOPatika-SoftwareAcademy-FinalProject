@@ -1,18 +1,38 @@
 ﻿@{ ViewData["Title"] = "Home Page"; }
 
-<div class="text-center">
-  <h1 class="display-4">Welcome</h1>
-  <div>qwe
-    <i data-feather="circle" color="black" id="my-circle" class="foo bar" stroke-width="1"></i>
+<div class="text-center d-flex justify-content-center">
+  <div class="card m-3" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Apartments</h5>
+      <p class="card-text">View owned/system apartments.</p>
+      <a href="@Url.Action("Index","Apartments")" class="btn btn-primary">Apartments Board</a>
+    </div>
   </div>
-  <p>
-    Learn about
-    <a href="https://docs.microsoft.com/aspnet/core"
-      >building Web apps with ASP.NET Core</a
-    >.
-    <li>
-     <i data-feather="circle"></i>
-     @Html.ActionLink("Bills", "Index", "Bills", new { @class = "elements" }, null)
-    </li>
-  </p>
+
+  <div class="card m-3" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Bills</h5>
+      <p class="card-text">View, pay bills.</p>
+      <a href="@Url.Action("Index","Bills")" class="btn btn-primary">Bills Board</a>
+    </div>
+  </div>
 </div>
+<div class="text-center d-flex justify-content-center">
+  <div class="card m-3" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Users</h5>
+      <p class="card-text">View users and their info.</p>
+      <a href="@Url.Action("Index","Users")" class="btn btn-primary">Users Board</a>
+    </div>
+  </div>
+
+  <div class="card m-3" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Vehicles</h5>
+      <p class="card-text">View vehicle info.</p>
+      <a href="@Url.Action("Index","Vehicles")" class="btn btn-primary">Vehicles Board</a>
+    </div>
+  </div>
+</div>
+
+

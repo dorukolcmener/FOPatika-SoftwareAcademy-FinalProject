@@ -23,7 +23,7 @@ public class BillController : Controller
 
     public IActionResult Index()
     {
-        var billList = _context.Bills.Include(bill => bill.Apartment).Include(bill => bill.Apartment.User).ToList<Bill>();
+        var billList = _context.Bills.Include(bill => bill.Apartment).Include(bill => bill.Apartment.User).OrderBy(b => b.IsPaid).ToList<Bill>();
         var billViewModelList = _mapper.Map<List<BillViewModel>>(billList);
         return View(billViewModelList);
     }

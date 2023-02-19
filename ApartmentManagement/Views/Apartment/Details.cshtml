@@ -1,0 +1,17 @@
+@model ApartmentViewModel
+
+@{
+    ViewData["Title"] = "Apartments Page";
+}
+
+<div class="text-center">
+    <div class="list-group-item d-flex justify-content-center align-items-center">
+        <h3>Apartment @Model.Id</h3> 
+    </div>
+    @await Html.PartialAsync("_ApartmentsTable", new List<ApartmentViewModel> { Model })
+    @* ############################################################################################## *@    
+    <div class="list-group-item d-flex justify-content-center align-items-center">
+        <h3>Bills of Apartment @Model.Id</h3> 
+    </div>
+    @await Html.PartialAsync("_BillsTable", Model.Bills)
+</div>
