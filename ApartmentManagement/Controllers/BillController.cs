@@ -104,9 +104,6 @@ public class BillController : Controller
         }
         var billViewModel = _mapper.Map<BillViewModel>(bill);
         return View(billViewModel);
-        // bill.IsPaid = true;
-        // _context.SaveChanges();
-        // return RedirectToAction("Index");
     }
 
     // Pay bill post
@@ -126,6 +123,7 @@ public class BillController : Controller
         currentUser.Balance -= bill.Amount;
         bill.IsPaid = true;
         _context.SaveChanges();
-        return RedirectToAction("Index");
+        // Redirect to home index
+        return RedirectToAction("Index", "Home");
     }
 }
