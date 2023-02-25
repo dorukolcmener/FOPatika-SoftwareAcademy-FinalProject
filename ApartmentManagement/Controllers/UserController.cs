@@ -59,6 +59,7 @@ public class UserController : Controller
             var billViewModel = _mapper.Map<List<BillViewModel>>(billList);
             billViewModelList.AddRange(billViewModel);
         }
+        billViewModelList = billViewModelList.OrderBy(b => b.DueDate).OrderBy(b => b.IsPaid).ToList();
         // Get vehicles of user
         var vehicleList = _context.Vehicles.Where(v => v.OwnerId == id).ToList();
         var vehicleViewModelList = _mapper.Map<List<VehicleViewModel>>(vehicleList);

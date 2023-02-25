@@ -14,8 +14,8 @@
             <th scope="col">E-Mail</th>
             <th scope="col">Phone</th>
             @if(ViewBag.Role == 0) {
-                <th scope="col"></th>
-                <th scope="col"></th>
+                @* <th scope="col"></th>
+                <th scope="col"></th> *@
             }
         </tr>
     </thead>
@@ -29,8 +29,8 @@
                 <td>@item.EMail</td>
                 <td>@item.Phone</td>
                 @if(ViewBag.Role == 0) {
-                    <td><a class="btn btn-warning" href="@Url.Action("Edit", "Bills", new { id = item.Id })" role="button">Edit</a></td>
-                    <td><a class="btn btn-danger" href="@Url.Action("Delete", "Bills", new { id = item.Id })" role="button">Delete</a></td>
+                    @* <td><a class="btn btn-warning" href="@Url.Action("Edit", "Bills", new { id = item.Id })" role="button">Edit</a></td>
+                    <td><a class="btn btn-danger" href="@Url.Action("Delete", "Bills", new { id = item.Id })" role="button">Delete</a></td> *@
                 }
             </tr>
         }

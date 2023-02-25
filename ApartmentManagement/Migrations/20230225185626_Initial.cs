@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApartmentManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class _11th : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,6 +23,7 @@ namespace ApartmentManagement.Migrations
                     EMail = table.Column<string>(type: "text", nullable: false),
                     Phone = table.Column<string>(type: "text", nullable: false),
                     TCNo = table.Column<long>(type: "bigint", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false),
                     Role = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -48,6 +49,34 @@ namespace ApartmentManagement.Migrations
                     table.ForeignKey(
                         name: "FK_Apartments_Users_UserId",
                         column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Content = table.Column<string>(type: "text", nullable: false),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    FromId = table.Column<int>(type: "integer", nullable: false),
+                    ToId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Messages_Users_FromId",
+                        column: x => x.FromId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Messages_Users_ToId",
+                        column: x => x.ToId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -80,7 +109,7 @@ namespace ApartmentManagement.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ApartmentId = table.Column<int>(type: "integer", nullable: false),
-                    Amount = table.Column<int>(type: "integer", nullable: false),
+                    Amount = table.Column<double>(type: "double precision", nullable: false),
                     DueDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsPaid = table.Column<bool>(type: "boolean", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false)
@@ -107,6 +136,16 @@ namespace ApartmentManagement.Migrations
                 column: "ApartmentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Messages_FromId",
+                table: "Messages",
+                column: "FromId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_ToId",
+                table: "Messages",
+                column: "ToId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Vehicles_OwnerId",
                 table: "Vehicles",
                 column: "OwnerId");
@@ -117,6 +156,9 @@ namespace ApartmentManagement.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Bills");
+
+            migrationBuilder.DropTable(
+                name: "Messages");
 
             migrationBuilder.DropTable(
                 name: "Vehicles");

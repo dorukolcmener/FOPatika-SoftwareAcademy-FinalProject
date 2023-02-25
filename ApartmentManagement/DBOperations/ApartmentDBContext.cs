@@ -14,4 +14,5 @@ public class ApartmentDBContext : DbContext
     public DbSet<Apartment> Apartments { get; set; }
     public DbSet<Vehicle> Vehicles { get; set; }
     public DbSet<Bill> Bills { get; set; }
+    public DbSet<Message> Messages { get; set; }
 }

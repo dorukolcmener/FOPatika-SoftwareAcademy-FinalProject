@@ -1,3 +1,4 @@
+using System.Globalization;
 using ApartmentManagement.Entities;
 using ApartmentManagement.Models;
 using AutoMapper;
@@ -29,5 +30,13 @@ public class MappingProfile : Profile
 
         CreateMap<ApartmentCreateViewModel, Apartment>();
         CreateMap<Apartment, ApartmentCreateViewModel>();
+
+        CreateMap<BillCreateViewModel, Bill>().ForMember(dest => dest.ApartmentId, opt => opt.MapFrom(src => src.ApartmentId))
+                                              .ForMember(dest => dest.DueDate, opt => opt.MapFrom(src => DateTime.ParseExact(src.DueDate, "mm/dd/yyyy", CultureInfo.InvariantCulture).ToUniversalTime()))
+                                              .ForMember(dest => dest.Type, opt => opt.MapFrom(src => Enum.Parse(typeof(BillType), src.Type)));
+
+        CreateMap<Message, MessageViewModel>().ForMember(dest => dest.From, opt => opt.MapFrom(src => src.From.EMail))
+                                             .ForMember(dest => dest.To, opt => opt.MapFrom(src => src.To.EMail))
+                                             .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date.ToString("dd/MM/yyyy HH:mm:ss")));
     }
 }

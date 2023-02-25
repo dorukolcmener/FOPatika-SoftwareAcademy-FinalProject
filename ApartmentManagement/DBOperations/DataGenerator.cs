@@ -42,8 +42,16 @@ public class DataGenerator
                 new Bill { ApartmentId = context.Apartments.First().Id, Amount = 100.5, DueDate = DateTime.Now.AddDays(5).ToUniversalTime(), IsPaid = true, Type = BillType.monthly },
                 new Bill { ApartmentId = context.Apartments.First().Id, Amount = 50.2, DueDate = DateTime.Now.AddDays(15).ToUniversalTime(), IsPaid = false, Type = BillType.electricity },
                 new Bill { ApartmentId = context.Apartments.Where(apt => apt.Id == 4).FirstOrDefault().Id, Amount = 30.3, DueDate = DateTime.Now.AddDays(5).ToUniversalTime(), IsPaid = true, Type = BillType.water },
-                new Bill { ApartmentId = context.Apartments.Where(apt => apt.Id == 5).FirstOrDefault().Id, Amount = 30.3, DueDate = DateTime.Now.AddDays(5).ToUniversalTime(), IsPaid = true, Type = BillType.water },
+                new Bill { ApartmentId = context.Apartments.Where(apt => apt.Id == 5).FirstOrDefault().Id, Amount = 30.3, DueDate = DateTime.Now.AddDays(5).ToUniversalTime(), IsPaid = true, Type = BillType.monthly },
                 new Bill { ApartmentId = context.Apartments.Where(apt => apt.Id == 6).FirstOrDefault().Id, Amount = 30.3, DueDate = DateTime.Now.AddDays(5).ToUniversalTime(), IsPaid = true, Type = BillType.water }
+            );
+
+            context.Messages.AddRange(
+                new Message { Content = "Hello, how are you?", Date = DateTime.Now.AddDays(-5).ToUniversalTime(), FromId = context.Users.First().Id, ToId = context.Users.Where(user => user.Id == 2).FirstOrDefault().Id },
+                new Message { Content = "I'm fine, thanks.", Date = DateTime.Now.AddDays(-4).ToUniversalTime(), FromId = context.Users.Where(user => user.Id == 2).FirstOrDefault().Id, ToId = context.Users.First().Id },
+                new Message { Content = "What's up?", Date = DateTime.Now.AddDays(-3).ToUniversalTime(), FromId = context.Users.First().Id, ToId = context.Users.Where(user => user.Id == 2).FirstOrDefault().Id },
+                new Message { Content = "Nothing much, just chilling.", Date = DateTime.Now.AddDays(-2).ToUniversalTime(), FromId = context.Users.Where(user => user.Id == 2).FirstOrDefault().Id, ToId = context.Users.First().Id },
+                new Message { Content = "Cool, see you later.", Date = DateTime.Now.AddDays(-1).ToUniversalTime(), FromId = context.Users.First().Id, ToId = context.Users.Where(user => user.Id == 2).FirstOrDefault().Id }
             );
 
             context.SaveChanges();

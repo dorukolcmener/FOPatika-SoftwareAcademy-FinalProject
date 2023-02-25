@@ -84,6 +84,36 @@ namespace ApartmentManagement.Migrations
                     b.ToTable("Bills");
                 });
 
+            modelBuilder.Entity("ApartmentManagement.Entities.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("FromId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ToId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromId");
+
+                    b.HasIndex("ToId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("ApartmentManagement.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -165,6 +195,25 @@ namespace ApartmentManagement.Migrations
                         .IsRequired();
 
                     b.Navigation("Apartment");
+                });
+
+            modelBuilder.Entity("ApartmentManagement.Entities.Message", b =>
+                {
+                    b.HasOne("ApartmentManagement.Entities.User", "From")
+                        .WithMany()
+                        .HasForeignKey("FromId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApartmentManagement.Entities.User", "To")
+                        .WithMany()
+                        .HasForeignKey("ToId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("From");
+
+                    b.Navigation("To");
                 });
 
             modelBuilder.Entity("ApartmentManagement.Entities.Vehicle", b =>

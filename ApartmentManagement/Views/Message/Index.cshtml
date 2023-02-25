@@ -1,0 +1,29 @@
+@model List<string>
+
+@{
+    var role = Context.Items["Role"];
+    ViewBag.Role = role;
+}
+
+<form method="get" action="Messages/RaiseMessage">
+    <div class="form-group">
+        <label for="exampleFormControlInput1">
+            Please select 
+            @if(ViewBag.Role == 0) {
+                <span>User</span>
+            }
+            else {
+                <span>Admin</span>
+            }
+            to message.
+        </label>
+        <select name="EMail" class="form-control" id="exampleFormControlInput1">
+            @foreach (var item in Model)
+            {
+                <option class="text-capitalize">@item</option>
+            }
+        </select>
+    </div>
+    <input type="submit" value="Select" class="btn btn-success mt-3"/>
+    <a href="#" class="btn btn-secondary mt-3" onclick="history.go(-1);">Cancel</a>
+</form>

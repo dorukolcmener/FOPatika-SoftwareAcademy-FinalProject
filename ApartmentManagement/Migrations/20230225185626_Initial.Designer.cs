@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApartmentManagement.Migrations
 {
     [DbContext(typeof(ApartmentDBContext))]
-    [Migration("20230215150755_11th")]
-    partial class _11th
+    [Migration("20230225185626_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,8 +65,8 @@ namespace ApartmentManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
+                    b.Property<double>("Amount")
+                        .HasColumnType("double precision");
 
                     b.Property<int>("ApartmentId")
                         .HasColumnType("integer");
@@ -87,6 +87,36 @@ namespace ApartmentManagement.Migrations
                     b.ToTable("Bills");
                 });
 
+            modelBuilder.Entity("ApartmentManagement.Entities.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("FromId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ToId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FromId");
+
+                    b.HasIndex("ToId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("ApartmentManagement.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -100,6 +130,10 @@ namespace ApartmentManagement.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -164,6 +198,25 @@ namespace ApartmentManagement.Migrations
                         .IsRequired();
 
                     b.Navigation("Apartment");
+                });
+
+            modelBuilder.Entity("ApartmentManagement.Entities.Message", b =>
+                {
+                    b.HasOne("ApartmentManagement.Entities.User", "From")
+                        .WithMany()
+                        .HasForeignKey("FromId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ApartmentManagement.Entities.User", "To")
+                        .WithMany()
+                        .HasForeignKey("ToId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("From");
+
+                    b.Navigation("To");
                 });
 
             modelBuilder.Entity("ApartmentManagement.Entities.Vehicle", b =>

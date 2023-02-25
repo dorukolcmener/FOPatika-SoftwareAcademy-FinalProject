@@ -37,6 +37,26 @@ public class BillController : Controller
         return View();
     }
 
+    [HttpPost("[action]")]
+    public IActionResult Create([FromForm] BillCreateViewModel billCreateViewModel)
+    {
+        // Get apartment with block and door
+        var apartment = _context.Apartments.Include(a => a.User).Where(a => a.Block == billCreateViewModel.Block && a.Door == billCreateViewModel.Door).FirstOrDefault();
+
+        if (apartment == null)
+        {
+            return NotFound();
+        }
+
+        billCreateViewModel.IsPaid = false;
+        billCreateViewModel.ApartmentId = apartment.Id;
+        var bill = _mapper.Map<Bill>(billCreateViewModel);
+        _context.Bills.Add(bill);
+        _context.SaveChanges();
+
+        return RedirectToAction("Index");
+    }
+
     // Get Bill Delete
     [HttpGet("[action]/{id}")]
     public IActionResult Delete(int id)
@@ -51,7 +71,7 @@ public class BillController : Controller
     }
 
     [HttpPost("Delete/{id}")]
-    public IActionResult DeletePost([FromBody] int id)
+    public IActionResult DeletePost([FromForm] int id)
     {
         var bill = _context.Bills.Find(id);
         if (bill == null)
