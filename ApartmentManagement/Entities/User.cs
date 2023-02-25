@@ -13,6 +13,7 @@ public class User
     public long TCNo { get; set; }
     public string Password { get; set; }
     public UserType Role { get; set; }
+    public double Balance { get; set; }
 }
 
 public enum UserType

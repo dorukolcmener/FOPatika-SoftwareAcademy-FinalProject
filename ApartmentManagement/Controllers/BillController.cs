@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApartmentManagement.Controllers;
 
-[RoleAttribute("admin")]
+[RoleAttribute]
 [Route("[controller]s")]
 public class BillController : Controller
 {
@@ -23,6 +23,8 @@ public class BillController : Controller
         _logger = logger;
     }
 
+
+    [RoleAttribute("admin")]
     public IActionResult Index()
     {
         var billList = _context.Bills.Include(bill => bill.Apartment).Include(bill => bill.Apartment.User).OrderBy(b => b.IsPaid).ToList<Bill>();
@@ -30,6 +32,8 @@ public class BillController : Controller
         return View(billViewModelList);
     }
 
+
+    [RoleAttribute("admin")]
     // Create Bill
     [HttpGet("[action]")]
     public IActionResult Create()
@@ -37,6 +41,8 @@ public class BillController : Controller
         return View();
     }
 
+
+    [RoleAttribute("admin")]
     [HttpPost("[action]")]
     public IActionResult Create([FromForm] BillCreateViewModel billCreateViewModel)
     {
@@ -57,6 +63,8 @@ public class BillController : Controller
         return RedirectToAction("Index");
     }
 
+
+    [RoleAttribute("admin")]
     // Get Bill Delete
     [HttpGet("[action]/{id}")]
     public IActionResult Delete(int id)
@@ -70,6 +78,8 @@ public class BillController : Controller
         return View(billViewModel);
     }
 
+
+    [RoleAttribute("admin")]
     [HttpPost("Delete/{id}")]
     public IActionResult DeletePost([FromForm] int id)
     {
@@ -79,6 +89,42 @@ public class BillController : Controller
             return NotFound();
         }
         _context.Bills.Remove(bill);
+        _context.SaveChanges();
+        return RedirectToAction("Index");
+    }
+
+    // Pay bill
+    [HttpGet("[action]/{id}")]
+    public IActionResult Pay(int id)
+    {
+        var bill = _context.Bills.Find(id);
+        if (bill == null)
+        {
+            return NotFound();
+        }
+        var billViewModel = _mapper.Map<BillViewModel>(bill);
+        return View(billViewModel);
+        // bill.IsPaid = true;
+        // _context.SaveChanges();
+        // return RedirectToAction("Index");
+    }
+
+    // Pay bill post
+    [HttpPost("Pay/{id}")]
+    public IActionResult PaytheBill([FromForm] int id)
+    {
+        var bill = _context.Bills.Find(id);
+        if (bill == null)
+        {
+            return NotFound();
+        }
+
+        var currentUser = HttpContext.Items["User"] as User;
+        if (currentUser.Balance < bill.Amount)
+            return BadRequest();
+
+        currentUser.Balance -= bill.Amount;
+        bill.IsPaid = true;
         _context.SaveChanges();
         return RedirectToAction("Index");
     }

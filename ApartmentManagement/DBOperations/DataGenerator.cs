@@ -15,8 +15,8 @@ public class DataGenerator
             }
 
             context.Users.AddRange(
-                new User { Name = "Touka", Surname = "Kirishima", EMail = "touka.kirishima@test.com", Password = "test123", Phone = "+1231231223", TCNo = 12345678901, Role = UserType.renter },
-                new User { Name = "Avatar", Surname = "Korra", EMail = "avatar.korra@test.com", Password = "test123", Phone = "+44231231223", TCNo = 12345678901, Role = UserType.admin }
+                new User { Name = "Touka", Surname = "Kirishima", EMail = "touka.kirishima@test.com", Password = "test123", Phone = "+1231231223", TCNo = 12345678901, Role = UserType.renter, Balance = 1000 },
+                new User { Name = "Avatar", Surname = "Korra", EMail = "avatar.korra@test.com", Password = "test123", Phone = "+44231231223", TCNo = 12345678901, Role = UserType.admin, Balance = 1000 }
             );
 
             context.SaveChanges();

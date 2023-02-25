@@ -27,6 +27,7 @@ public class RoleMiddleware
                 // Set user to view data
                 context.Items["User"] = user;
                 context.Items["Role"] = (int)user.Role;
+                context.Items["Balance"] = user.Balance;
             }
             catch (Exception e)
             {

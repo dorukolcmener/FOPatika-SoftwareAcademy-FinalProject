@@ -104,8 +104,8 @@ public class UserController : Controller
         {
             return NotFound();
         }
-        var userViewModel = _mapper.Map<UserViewModel>(user);
-        return View(userViewModel);
+        var userCreateModel = _mapper.Map<UserCreateModel>(user);
+        return View(userCreateModel);
     }
 
     // POST: User/Edit/5
@@ -126,10 +126,11 @@ public class UserController : Controller
         user.Password = userViewModel.Password ?? user.Password;
         user.TCNo = userViewModel.TCNo > 0 ? userViewModel.TCNo : user.TCNo;
         user.Phone = userViewModel.Phone ?? user.Phone;
+        user.Balance = userViewModel.Balance > 0 ? userViewModel.Balance : user.Balance;
         user.Role = Enum.Parse<UserType>(userViewModel.Role);
 
         _context.SaveChanges();
-        return View(userViewModel);
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: User/Delete/5

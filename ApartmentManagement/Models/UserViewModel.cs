@@ -10,6 +10,7 @@ public class UserViewModel
     public string Phone { get; set; }
     public string Role { get; set; }
     public long TCNo { get; set; }
+    public double Balance { get; set; }
     public List<ApartmentViewModel>? Apartments { get; set; }
     public List<BillViewModel>? Bills { get; set; }
     public List<VehicleViewModel>? Vehicles { get; set; }

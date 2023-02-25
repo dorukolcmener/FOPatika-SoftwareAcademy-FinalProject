@@ -15,7 +15,8 @@ public class MappingProfile : Profile
                                         .ForMember(dest => dest.EMail, opt => opt.MapFrom(src => src.Apartment.User.EMail))
                                         .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Apartment.User.Phone))
                                         .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => $"{src.Apartment.User.Name} {src.Apartment.User.Surname}"))
-                                        .ForMember(dest => dest.Type, opt => opt.MapFrom(src => Enum.GetName(typeof(BillType), src.Type)));
+                                        .ForMember(dest => dest.Type, opt => opt.MapFrom(src => Enum.GetName(typeof(BillType), src.Type)))
+                                        .ForMember(dest => dest.DueDate, opt => opt.MapFrom(src => src.DueDate.ToString("dd/MM/yyyy")));
 
         CreateMap<Apartment, ApartmentViewModel>().ForMember(dest => dest.UserName, opt => opt.MapFrom(src => $"{src.User.Name} {src.User.Surname}"))
                                                   .ForMember(dest => dest.EMail, opt => opt.MapFrom(src => src.User.EMail))
@@ -23,6 +24,8 @@ public class MappingProfile : Profile
 
         CreateMap<User, UserViewModel>().ForMember(dest => dest.Role, opt => opt.MapFrom(src => Enum.GetName(typeof(UserType), src.Role)));
         CreateMap<UserViewModel, User>().ForMember(dest => dest.Role, opt => opt.MapFrom(src => Enum.Parse(typeof(UserType), src.Role)));
+        CreateMap<User, UserCreateModel>().ForMember(dest => dest.Role, opt => opt.MapFrom(src => Enum.GetName(typeof(UserType), src.Role)));
+        CreateMap<UserCreateModel, User>().ForMember(dest => dest.Role, opt => opt.MapFrom(src => Enum.Parse(typeof(UserType), src.Role)));
 
         CreateMap<Vehicle, VehicleViewModel>().ForMember(dest => dest.UserName, opt => opt.MapFrom(src => $"{src.Owner.Name} {src.Owner.Surname}"))
                                               .ForMember(dest => dest.EMail, opt => opt.MapFrom(src => src.Owner.EMail))
@@ -32,7 +35,7 @@ public class MappingProfile : Profile
         CreateMap<Apartment, ApartmentCreateViewModel>();
 
         CreateMap<BillCreateViewModel, Bill>().ForMember(dest => dest.ApartmentId, opt => opt.MapFrom(src => src.ApartmentId))
-                                              .ForMember(dest => dest.DueDate, opt => opt.MapFrom(src => DateTime.ParseExact(src.DueDate, "mm/dd/yyyy", CultureInfo.InvariantCulture).ToUniversalTime()))
+                                              .ForMember(dest => dest.DueDate, opt => opt.MapFrom(src => DateTime.ParseExact(src.DueDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToUniversalTime()))
                                               .ForMember(dest => dest.Type, opt => opt.MapFrom(src => Enum.Parse(typeof(BillType), src.Type)));
 
         CreateMap<Message, MessageViewModel>().ForMember(dest => dest.From, opt => opt.MapFrom(src => src.From.EMail))

@@ -1,9 +1,10 @@
-@model UserViewModel
+@model UserCreateModel
 
 <form method="post">
     <div class="form-group">
         <label for="exampleFormControlSelect1">User Role</label>
         <select name="Role" class="form-control" id="exampleFormControlSelect1">
+            <option class="text-capitalize">@Model.Role</option>
             <option class="text-capitalize">admin</option>
             <option class="text-capitalize">owner</option>
             <option class="text-capitalize">renter</option>
@@ -18,6 +19,11 @@
     <div class="form-group">
         <label for="exampleInputPassword1">Password</label>
         <input name="Password" type="password" class="form-control" id="exampleInputPassword1" value="@Model.Password">
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputPassword1">Balance</label>
+        <input name="Balance" type="text" class="form-control" id="exampleInputPassword1" value="@Model.Balance">
     </div>
 
     <div class="form-group">
