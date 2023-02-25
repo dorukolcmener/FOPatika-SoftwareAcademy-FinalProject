@@ -1,3 +1,4 @@
+using ApartmentManagement.AuthorizationOperations;
 using ApartmentManagement.DBOperations;
 using ApartmentManagement.Models;
 using AutoMapper;
@@ -6,7 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApartmentManagement.Controllers;
 
+
 [Route("[controller]s")]
+[RoleAttribute("admin")]
 public class VehicleController : Controller
 {
     private readonly ApartmentDBContext _context;

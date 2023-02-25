@@ -1,5 +1,10 @@
 @model List<BillViewModel>
 
+@{
+    var role = Context.Items["Role"];
+    ViewBag.Role = role;
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -13,8 +18,10 @@
             <th scope="col">Name</th>
             <th scope="col">Phone</th>
             <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
+            @if(ViewBag.Role == 0) {
+                <th scope="col"></th>
+                <th scope="col"></th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -38,8 +45,10 @@
                 {
                     <td><a class="btn btn-secondary disabled" href="#" role="button">Paid</a></td>
                 }
-                <td><a class="btn btn-warning" href="@Url.Action("Edit", "Bills", new { id = item.Id })" role="button">Edit</a></td>
-                <td><a class="btn btn-danger" href="@Url.Action("Delete", "Bills", new { id = item.Id })" role="button">Delete</a></td>
+                @if(ViewBag.Role == 0) {
+                    <td><a class="btn btn-warning" href="@Url.Action("Edit", "Bills", new { id = item.Id })" role="button">Edit</a></td>
+                    <td><a class="btn btn-danger" href="@Url.Action("Delete", "Bills", new { id = item.Id })" role="button">Delete</a></td>
+                }
             </tr>
         }
     </tbody>

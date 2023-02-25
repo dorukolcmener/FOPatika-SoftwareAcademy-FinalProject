@@ -8,7 +8,7 @@ public class Bill
     public int Id { get; set; }
     public int ApartmentId { get; set; }
     public Apartment Apartment { get; set; }
-    public int Amount { get; set; }
+    public double Amount { get; set; }
     public DateTime DueDate { get; set; }
     public bool IsPaid { get; set; }
     public BillType Type { get; set; }

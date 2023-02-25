@@ -1,4 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var role = Context.Items["Role"];
+    if (role == null)
+    {
+        role = -1;
+    }
+    ViewBag.Role = role;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -18,12 +27,17 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1 d-flex justify-content-between">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item d-flex">
+                            @if(ViewBag.Role == -1) {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Access" asp-action="Login">Sign In</a>
+                            }
+                            else {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Access" asp-action="Logout">Sign Out</a>
+                            }
                         </li>
                     </ul>
                 </div>

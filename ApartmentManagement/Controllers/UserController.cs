@@ -1,3 +1,4 @@
+using ApartmentManagement.AuthorizationOperations;
 using ApartmentManagement.DBOperations;
 using ApartmentManagement.Entities;
 using ApartmentManagement.Models;
@@ -7,7 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApartmentManagement.Controllers;
 
+
 [Route("[controller]s")]
+[RoleAttribute]
 public class UserController : Controller
 {
     private readonly ApartmentDBContext _context;
@@ -19,10 +22,12 @@ public class UserController : Controller
         _mapper = mapper;
     }
 
-    // GET: User
+    // GET: Users
+    [RoleAttribute("admin")]
     public IActionResult Index()
     {
-        var userList = _context.Users.OrderBy(u => u.Role).ToList();
+        List<User> userList;
+        userList = _context.Users.OrderBy(u => u.Role).ToList();
         var userViewModelList = _mapper.Map<List<UserViewModel>>(userList);
         return View(userViewModelList);
     }
@@ -32,32 +37,64 @@ public class UserController : Controller
     public IActionResult Details(int id)
     {
         var user = _context.Users.Find(id);
+        var currentUser = HttpContext.Items["User"] as User;
         if (user == null)
         {
             return NotFound();
         }
+        if (currentUser.Id != id && currentUser.Role != UserType.admin)
+        {
+            Response.StatusCode = 401;
+            return Content("You are not authorized to access this page.");
+        }
         var userViewModel = _mapper.Map<UserViewModel>(user);
+        // Get apartments
+        var apartmentList = _context.Apartments.Where(a => a.UserId == id).ToList();
+        var apartmentViewModelList = _mapper.Map<List<ApartmentViewModel>>(apartmentList);
+        // Craete list of users's billviewmodel of apartments
+        var billViewModelList = new List<BillViewModel>();
+        foreach (var apartment in apartmentList)
+        {
+            var billList = _context.Bills.Where(b => b.ApartmentId == apartment.Id).ToList();
+            var billViewModel = _mapper.Map<List<BillViewModel>>(billList);
+            billViewModelList.AddRange(billViewModel);
+        }
+        // Get vehicles of user
+        var vehicleList = _context.Vehicles.Where(v => v.OwnerId == id).ToList();
+        var vehicleViewModelList = _mapper.Map<List<VehicleViewModel>>(vehicleList);
+
+        userViewModel.Apartments = apartmentViewModelList;
+        userViewModel.Bills = billViewModelList;
+        userViewModel.Vehicles = vehicleViewModelList;
+
+        // ViewBag.Role = (int)currentUser.Role;
         return View(userViewModel);
     }
 
     // GET: User/Create
+    [RoleAttribute("admin")]
     [HttpGet("[action]")]
-    public IActionResult CreateUser()
+    public IActionResult Create()
     {
         return View();
     }
 
     // POST: User/Create
+    [RoleAttribute("admin")]
     [HttpPost("[action]")]
     [ValidateAntiForgeryToken]
-    public IActionResult CreateUser([FromForm] UserViewModel userViewModel)
+    public IActionResult Create([FromForm] UserViewModel userViewModel)
     {
         // Map
         var user = _mapper.Map<User>(userViewModel);
-        return Ok();
+        // Save
+        _context.Users.Add(user);
+        _context.SaveChanges();
+        return RedirectToAction(nameof(Index));
     }
 
     // GET: User/Edit/5
+    [RoleAttribute("admin")]
     [HttpGet("[action]/{id}")]
     public IActionResult Edit(int id)
     {
@@ -71,29 +108,52 @@ public class UserController : Controller
     }
 
     // POST: User/Edit/5
-    [HttpPost]
+    [RoleAttribute("admin")]
+    [HttpPost("[action]/{id}")]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(int id, UserViewModel userViewModel)
+    public IActionResult Edit(int id, [FromForm] UserCreateModel userViewModel)
     {
-        if (id != userViewModel.Id)
+        var user = _context.Users.Find(id);
+        if (user == null)
         {
             return NotFound();
         }
 
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                var user = _mapper.Map<User>(userViewModel);
-                _context.Users.Update(user);
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                throw;
-            }
-            return RedirectToAction(nameof(Index));
-        }
+        user.EMail = userViewModel.Email ?? user.EMail;
+        user.Name = userViewModel.Name ?? user.Name;
+        user.Surname = userViewModel.Surname ?? user.Surname;
+        user.Password = userViewModel.Password ?? user.Password;
+        user.TCNo = userViewModel.TCNo > 0 ? userViewModel.TCNo : user.TCNo;
+        user.Phone = userViewModel.Phone ?? user.Phone;
+        user.Role = Enum.Parse<UserType>(userViewModel.Role);
+
+        _context.SaveChanges();
         return View(userViewModel);
+    }
+
+    // GET: User/Delete/5
+    [RoleAttribute("admin")]
+    [HttpGet("[action]/{id}")]
+    public IActionResult Delete(int id)
+    {
+        var user = _context.Users.Find(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        var userViewModel = _mapper.Map<UserViewModel>(user);
+        return View(userViewModel);
+    }
+
+    // POST: User/Delete/5
+    [RoleAttribute("admin")]
+    [HttpPost("[action]/{id}"), ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        var user = _context.Users.Find(id);
+        _context.Users.Remove(user);
+        _context.SaveChanges();
+        return RedirectToAction(nameof(Index));
     }
 }

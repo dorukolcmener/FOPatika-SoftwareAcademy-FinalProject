@@ -2,6 +2,7 @@ using ApartmentManagement.DBOperations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Reflection;
+using ApartmentManagement.AuthorizationOperations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,9 @@ builder.Services.AddDbContext<ApartmentDBContext>(options =>
 
 // Add Mapper
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+// Add TokenHandler
+builder.Services.AddSingleton<TokenHandler>(new TokenHandler(builder.Configuration["TokenKey"]));
 
 var app = builder.Build();
 
@@ -42,10 +46,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Add Role Middleware
+app.UseMiddleware<RoleMiddleware>();
+
 // Add authentication to the HTTP request pipeline.
 app.UseAuthentication();
 
-app.UseAuthorization();
+// Add authorization to the HTTP request pipeline.
+// app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

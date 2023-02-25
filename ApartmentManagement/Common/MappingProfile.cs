@@ -26,5 +26,8 @@ public class MappingProfile : Profile
         CreateMap<Vehicle, VehicleViewModel>().ForMember(dest => dest.UserName, opt => opt.MapFrom(src => $"{src.Owner.Name} {src.Owner.Surname}"))
                                               .ForMember(dest => dest.EMail, opt => opt.MapFrom(src => src.Owner.EMail))
                                               .ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Owner.Phone));
+
+        CreateMap<ApartmentCreateViewModel, Apartment>();
+        CreateMap<Apartment, ApartmentCreateViewModel>();
     }
 }

@@ -1,0 +1,41 @@
+@model ApartmentCreateViewModel
+
+<form method="post">
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">User Email</label>
+        <select name="EMail" class="form-control" id="exampleFormControlSelect1">
+            @foreach (var item in Model.EMailList)
+            {
+                <option class="text-capitalize">@item</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Block</label>
+        <select name="Block" class="form-control" id="exampleFormControlInput1">
+            <option class="text-capitalize">@Model.Block</option>
+            <option class="text-capitalize">A Block</option>
+            <option class="text-capitalize">B Block</option>
+            <option class="text-capitalize">C Block</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputText">Floor</label>
+        <input name="Floor" type="text" class="form-control" id="exampleInputText" placeholder="10" value="@Model.Floor">
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputText">Door</label>
+        <input name="Door" type="text" class="form-control" id="exampleInputText" placeholder="20" value="@Model.Door">
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputText">FlatType</label>
+        <input name="FlatType" type="text" class="form-control" id="exampleInputText" placeholder="2+1" value="@Model.FlatType">
+    </div>
+
+    <input type="submit" value="Edit Apartment" class="btn btn-warning mt-3"/>
+    <a href="#" class="btn btn-secondary mt-3" onclick="history.go(-1);">Cancel</a>
+</form>

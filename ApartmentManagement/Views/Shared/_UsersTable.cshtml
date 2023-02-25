@@ -1,5 +1,10 @@
 @model List<UserViewModel>
 
+@{
+    var role = Context.Items["Role"];
+    ViewBag.Role = role;
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -11,8 +16,10 @@
             <th scope="col">Phone</th>
             <th scope="col">TCNo</th>
             <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
+            @if(ViewBag.Role == 0) {
+                <th scope="col"></th>
+                <th scope="col"></th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -26,9 +33,11 @@
                 <td>@item.Surname</td>
                 <td>@item.Phone</td>
                 <td>@item.TCNo</td>
-                <td><a class="btn btn-primary" href="@Url.Action("Details", "Apartments", new { id = item.Id })" role="button">Apartments</a></td>
-                <td><a class="btn btn-warning" href="@Url.Action("Edit", "Apartments", new { id = item.Id })" role="button">Edit</a></td>
-                <td><a class="btn btn-danger" href="@Url.Action("Delete", "Apartments", new { id = item.Id })" role="button">Delete</a></td>
+                <td><a class="btn btn-primary" href="@Url.Action("Details", "Users", new { id = item.Id })" role="button">Details</a></td>
+                @if(ViewBag.Role == 0) {
+                    <td><a class="btn btn-warning" href="@Url.Action("Edit", "Users", new { id = item.Id })" role="button">Edit</a></td>
+                    <td><a class="btn btn-danger" href="@Url.Action("Delete", "Users", new { id = item.Id })" role="button">Delete</a></td>
+                }
             </tr>
         }
     </tbody>

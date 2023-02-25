@@ -3,6 +3,7 @@ using System;
 using ApartmentManagement.DBOperations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApartmentManagement.Migrations
 {
     [DbContext(typeof(ApartmentDBContext))]
-    partial class ApartmentDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230219135759_PWUpdate")]
+    partial class PWUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,8 +65,8 @@ namespace ApartmentManagement.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("double precision");
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
 
                     b.Property<int>("ApartmentId")
                         .HasColumnType("integer");

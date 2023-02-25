@@ -1,0 +1,28 @@
+@model UserViewModel
+
+@{
+    ViewData["Title"] = "Users Page";
+}
+
+<div class="text-center">
+    <div class="list-group-item d-flex justify-content-center align-items-center">
+        <h3>User @Model.Id</h3> 
+    </div>
+    @await Html.PartialAsync("_UsersTable", new List<UserViewModel> { Model })
+    @* ############################################################################################## *@    
+    <div class="list-group-item d-flex justify-content-center align-items-center">
+        <h3>Apartments of User @Model.Id</h3> 
+    </div>
+    @await Html.PartialAsync("_ApartmentsTable", Model.Apartments)
+    @* @await Html.PartialAsync("_BillsTable", Model.Bills) *@
+    @* ############################################################################################## *@    
+    <div class="list-group-item d-flex justify-content-center align-items-center">
+        <h3>Bills of User @Model.Id</h3> 
+    </div>
+    @await Html.PartialAsync("_BillsTable", Model.Bills)
+    @* ############################################################################################## *@    
+    <div class="list-group-item d-flex justify-content-center align-items-center">
+        <h3>Vehicles of User @Model.Id</h3> 
+    </div>
+    @await Html.PartialAsync("_VehiclesTable", Model.Vehicles)
+</div>

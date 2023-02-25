@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Bills Page";
+    var role = Context.Items["Role"];
+    ViewBag.Role = role;
 }
 
 <div class="text-center">
@@ -10,4 +12,8 @@
     </div>
     @*Include partial bills table*@
     @Html.Partial("_BillsTable", Model)
+
+    @if (ViewBag.Role == 0) {
+        <a class="btn btn-success" href="@Url.Action("Create", "Bills")" role="button">Create Bill</a>
+    }
 </div>

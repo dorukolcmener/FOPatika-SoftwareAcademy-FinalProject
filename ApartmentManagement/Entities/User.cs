@@ -11,12 +11,13 @@ public class User
     public string EMail { get; set; }
     public string Phone { get; set; }
     public long TCNo { get; set; }
+    public string Password { get; set; }
     public UserType Role { get; set; }
 }
 
 public enum UserType
 {
-    admin,
+    admin = 0,
     owner,
     renter
 }

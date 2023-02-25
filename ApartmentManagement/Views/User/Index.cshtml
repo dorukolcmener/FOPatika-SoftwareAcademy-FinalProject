@@ -2,12 +2,17 @@
 
 @{
     ViewData["Title"] = "Users Page";
+    var role = Context.Items["Role"];
+    ViewBag.Role = role;
 }
 
 <div class="text-center">
     <div class="list-group-item d-flex justify-content-center align-items-center">
-        <h3>Users</h3> 
+        <h3>User</h3> 
     </div>
     @await Html.PartialAsync("_UsersTable", Model)
-    <a class="btn btn-success" href="@Url.Action("CreateUser", "Users")" role="button">Create User</a>
+
+    @if (ViewBag.Role == 0) {
+        <a class="btn btn-success" href="@Url.Action("Create", "Users")" role="button">Create User</a>
+    }
 </div>

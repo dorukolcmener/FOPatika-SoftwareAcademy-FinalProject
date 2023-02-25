@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using ApartmentManagement.Models;
 using ApartmentManagement.DBOperations;
+using ApartmentManagement.AuthorizationOperations;
+using ApartmentManagement.Entities;
 
 namespace ApartmentManagement.Controllers;
 
+[RoleAttribute]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -18,7 +21,11 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        var currentUser = HttpContext.Items["User"] as User;
+        if (currentUser.Role == UserType.admin)
+            return View();
+        else
+            return RedirectToAction("Details", "Users", new { id = currentUser.Id });
     }
 
     public IActionResult Privacy()
@@ -26,9 +33,9 @@ public class HomeController : Controller
         return View();
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
+    // [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    // public IActionResult Error()
+    // {
+    //     return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    // }
 }

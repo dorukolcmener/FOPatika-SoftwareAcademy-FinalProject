@@ -1,0 +1,45 @@
+@model UserViewModel
+
+<form method="post">
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">User Role</label>
+        <select name="Role" class="form-control" id="exampleFormControlSelect1">
+            <option class="text-capitalize">admin</option>
+            <option class="text-capitalize">owner</option>
+            <option class="text-capitalize">renter</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="exampleFormControlInput1">Email address</label>
+        <input name="Email" type="Email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value="@Model.Email">
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input name="Password" type="password" class="form-control" id="exampleInputPassword1" value="@Model.Password">
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputPassword1">Name</label>
+        <input name="Name" type="text" class="form-control" id="exampleInputPassword1" value="@Model.Name">
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputPassword1">Surname</label>
+        <input name="Surname" type="text" class="form-control" id="exampleInputPassword1" value="@Model.Surname">
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputPassword1">Phone</label>
+        <input name="Phone" type="tel" class="form-control" id="exampleInputPassword1" placeholder="+xx(111)111-1111" value="@Model.Phone">
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputPassword1">TC No</label>
+        <input name="TCNo" type="text" class="form-control" id="exampleInputPassword1" placeholder="11111111111" value="@Model.TCNo">
+    </div>
+
+    <input type="submit" value="Edit User" class="btn btn-warning mt-3"/>
+    <a href="#" class="btn btn-secondary mt-3" onclick="history.go(-1);">Cancel</a>
+</form>
