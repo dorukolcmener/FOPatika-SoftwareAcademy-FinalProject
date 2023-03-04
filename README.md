@@ -2,20 +2,45 @@
 
 Final project of FO Patika Software Academy Program
 
+<img src="./Assets/UMLDiagram.png" height="600px"/>
+
 ## Usage
 
-If you want to review my repository locally, please clone it first.
+1- If you want to review my repository locally, please clone it first.
 
 ```
 git clone https://github.com/dorukolcmener/FOPatika-SoftwareAcademy-FinalProject
 ```
 
-After downloading the repository, open it with your favourite IDE.
+2- After downloading the repository, open it with your favourite IDE.
 
 ```
 cd FOPatika-SoftwareAcademy-FinalProject
 code .
 ```
+
+3- Initialize migration
+
+```
+4- dotnet ef migrations add Initial
+```
+
+5- Connect and update database with the migration
+
+```
+dotnet ef database update.
+```
+
+6- Run the application
+
+```
+dotnet run
+dotnet watch run
+```
+
+## Next Steps (Pending)
+
+- Restructure and implement fluent validation for controllers.
 
 Enjoy 🚀 - Doruk
 

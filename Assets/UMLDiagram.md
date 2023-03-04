@@ -1,8 +1,9 @@
 classDiagram
     class Admin {
-        Edit(User usr)
-        Edit(Apartment apt)
-        AssignBill(Bill bill,User)
+        View(Users, Apartments, Bills)
+        Create(...)
+        Update/Edit(...)
+        Delete(...)
     }
 
     class User {
@@ -11,6 +12,7 @@ classDiagram
         string EMail
         string Phone
         int TCNo
+        Enum Role Admin|Owner|Renter
 
         void SendMessage(string Msg)
         void Pay(Bill bill)
@@ -19,23 +21,23 @@ classDiagram
     class Apartment {
         string Block
         int Floor
-        int FlatNo
+        int Door
         string FlatType
-        User Owner
-        User? Renter
+        User Resident
     }
 
     class Vehicle {
         string LicensePlate
+        User Owner
     }
 
     class Bill {
         int Amount
-        string Type
+        Enum Type
     }
 
-    Admin -- User
-    Admin --|> User
+    User -- Admin
+    User <|-- Admin
     Admin --> Apartment
     Admin --> Bill
     
