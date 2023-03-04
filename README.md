@@ -38,6 +38,13 @@ dotnet run
 dotnet watch run
 ```
 
+7- Login as Admin (Please change your password once you have logged in.)
+
+```
+E-Mail: avatar.korra@test.com
+Password: test123
+```
+
 ## Next Steps (Pending)
 
 - Restructure and implement fluent validation for controllers.
