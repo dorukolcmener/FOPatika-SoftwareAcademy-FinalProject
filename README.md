@@ -22,23 +22,23 @@ code .
 3- Initialize migration
 
 ```
-4- dotnet ef migrations add Initial
+dotnet ef migrations add Initial
 ```
 
-5- Connect and update database with the migration
+4- Connect and update database with the migration
 
 ```
 dotnet ef database update.
 ```
 
-6- Run the application
+5- Run the application
 
 ```
 dotnet run
 dotnet watch run
 ```
 
-7- Login as Admin (Please change your password once you have logged in.)
+6- Login as Admin (Please change your password once you have logged in.)
 
 ```
 E-Mail: avatar.korra@test.com
